@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   
   resources :categories
+  get 'new_basic', to: 'categories#create_basic_categories'
   
   root to: "categories#index"
   # The priority is based upon order of creation: first created -> highest priority.
