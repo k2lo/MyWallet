@@ -12,6 +12,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   # GET /categories/1.json
   def show
+    @category_expenses = @category.expenses
   end
 
   # GET /categories/new
