@@ -23,11 +23,11 @@
           <%= link_to "Delete this expense", expense_path(expense), method: :delete,
                                         data: { confirm: "Are you sure you want to delete the expense?"},
                                         class: "btn btn-xs btn-danger" %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 </p>
 <%= link_to 'New Expense', new_expense_path(@category) %> |
 <%= link_to 'Edit', edit_category_path(@category) %> |

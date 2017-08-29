@@ -1,12 +1,13 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, except: [:index]
-  before_action :create_basic_categories, only: [:create_basic_categories1]
+  before_action :authenticate_user!
   
   # GET /categories
   # GET /categories.json
   def index
     @categories = Category.all
+    @expenses = Expense.all
+    
   end
   
   # GET /categories/1
@@ -28,6 +29,7 @@ class CategoriesController < ApplicationController
   # POST /categories.json
   def create
     @category = Category.new(category_params)
+    @category.user = current_user
 
     respond_to do |format|
       if @category.save
@@ -69,8 +71,8 @@ class CategoriesController < ApplicationController
     @basic_categories = ["Bills", "Clothes", "Food", "House"]
     
     @basic_categories.each do |basic_categories|
-      
-    @category = Category.create(name: basic_categories)
+    @category = Category.create(name: basic_categories, user: current_user)
+    
 
     end
     
@@ -85,7 +87,7 @@ class CategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:name)
+      params.require(:category).permit(:name, :user_id)
     end
 
 end
