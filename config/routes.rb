@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
-  resources :expenses
+  
+  resources :categories do
+    resources :expenses
+  end
+  
+  #resources :expenses
   devise_for :users
   
-  resources :categories
+  #resources :categories
   get 'new_basic', to: 'categories#create_basic_categories'
   
   root to: "categories#index"
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

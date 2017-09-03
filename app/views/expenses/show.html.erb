@@ -10,5 +10,6 @@
   <%= @expense.description %>
 </p>
 
-<%= link_to 'Edit', edit_expense_path(@expense) %> |
-<%= link_to 'Back', expenses_path %>
+<%= link_to 'Edit', edit_category_expense_path(@category, @expense) %> |
+<%= link_to 'Delete expense', category_expense_path(@category, @expense), method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'Back', category_expenses_path %>

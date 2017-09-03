@@ -13,14 +13,14 @@
     <div class="col-xs-8 col-xs-offset-2">
       <div class="well well-lg">
         <div class="article-title">
-          <%= link_to expense.value, expense_path(expense) %>
+          <%= link_to expense.value, category_expense_path(@category, expense) %>
         </div>
         <div class="article-body">
           <%= truncate(expense.description, length: 100) %>
         </div>
          <div class="article-actions">
-          <%= link_to 'Edit this expense', edit_expense_path(expense), class: "btn btn-xs btn-primary" %>
-          <%= link_to "Delete this expense", expense_path(expense), method: :delete,
+          <%= link_to 'Edit this expense', edit_category_expense_path(@category, expense), class: "btn btn-xs btn-primary" %>
+          <%= link_to "Delete this expense", category_expense_path(@category, expense), method: :delete,
                                         data: { confirm: "Are you sure you want to delete the expense?"},
                                         class: "btn btn-xs btn-danger" %>
           </div>
@@ -29,6 +29,7 @@
     </div>
   <% end %>
 </p>
-<%= link_to 'New Expense', new_expense_path(@category) %> |
+<%= link_to 'New Expense', new_category_expense_path(@category) %> |
 <%= link_to 'Edit', edit_category_path(@category) %> |
+<%= link_to 'Delete category', @category, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= link_to 'Back', categories_path %>

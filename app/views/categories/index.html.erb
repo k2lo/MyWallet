@@ -14,11 +14,9 @@
     <% @categories.each do |category| %>
       <% if (current_user == category.user) %>
         <tr>
-          <td><%= category.name %></td>
+          <td><%= link_to category.name, category %> </td>
           <td><%= category.expenses.sum(&:value) %></td>
-          <td><%= link_to 'Show', category %></td>
-          <td><%= link_to 'Edit', edit_category_path(category) %></td>
-          <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'New expense', new_category_expense_path(category) %></td>
         </tr>
       <% end %>
     <% end %>
@@ -29,5 +27,5 @@
 
   <br>
 
-<%= link_to 'New Category', new_category_path %>
+<%= link_to 'New Category', new_category_path %> |
 <%= link_to 'Create Basic Categories', 'new_basic' %>
