@@ -15,16 +15,16 @@
       <% if (current_user == category.user) %>
         <tr>
           <td><%= link_to category.name, category %> </td>
-          <td><%= number_to_currency(category.expenses.sum(&:value), :unit => "€", format: "%n %u") %></td>
+          <td><%= number_to_currency(category.expenses.sum(&:value), :unit => @currency, format: "%n %u") %></td>
           <td><%= number_to_percentage((category.expenses.sum(&:value))/(@expenses.where(user_id: current_user).sum(&:value))*100.0, precision: 0) %></td>
           <td><%= link_to 'New expense', new_category_expense_path(category) %></td>
         </tr>
       <% end %>
     <% end %>
       <td>All expenses: </td>
-      <td><%= number_to_currency(@expenses.where(user_id: current_user).sum(&:value), :unit => "€", format: "%n %u") %></td>
+      <td><%= number_to_currency(@expenses.where(user_id: current_user).sum(&:value), :unit => @currency, format: "%n %u") %></td>
       <td>Balance: </td>
-      <td><%= number_to_currency(2500 - @expenses.where(user_id: current_user).sum(&:value), :unit => "€", format: "%n %u") %></td>
+      <td><%= number_to_currency(@budget.to_i - @expenses.where(user_id: current_user).sum(&:value), :unit => "€", format: "%n %u") %></td>
     </tbody>
   </table>
 
