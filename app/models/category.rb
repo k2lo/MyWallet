@@ -3,8 +3,6 @@ class Category < ApplicationRecord
     validates :user_id, presence: true
     validates_uniqueness_of :name
     has_many :expenses, dependent: :destroy
-    accepts_nested_attributes_for :expenses
     belongs_to :user
-    
-    
+
 end
