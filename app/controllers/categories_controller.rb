@@ -9,17 +9,21 @@ class CategoriesController < ApplicationController
     @expenses = Expense.all
     
     if @setting = Setting.order("created_at").last == nil  
-      @setting = Setting.new(:budget => 0, :currency => "$")
+      @setting = Setting.new(:budget => 0, :currency => ISO4217::Currency.from_code('USD').symbol)
     else
       @setting = Setting.order("created_at").last
     end
-     
   end
   
   # GET /categories/1
   # GET /categories/1.json
   def show
     @category_expenses = @category.expenses
+    if @setting = Setting.order("created_at").last == nil  
+      @setting = Setting.new(:budget => 0, :currency => ISO4217::Currency.from_code('USD').symbol)
+    else
+      @setting = Setting.order("created_at").last
+    end
   end
 
   # GET /categories/new

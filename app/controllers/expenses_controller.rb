@@ -6,11 +6,21 @@ class ExpensesController < ApplicationController
   # GET /expenses.json
   def index
     @expenses = Expense.all
+    if @setting = Setting.order("created_at").last == nil  
+      @setting = Setting.new(:budget => 0, :currency => ISO4217::Currency.from_code('USD').symbol)
+    else
+      @setting = Setting.order("created_at").last
+    end
   end
 
   # GET /expenses/1
   # GET /expenses/1.json
   def show
+    if @setting = Setting.order("created_at").last == nil  
+      @setting = Setting.new(:budget => 0, :currency => ISO4217::Currency.from_code('USD').symbol)
+    else
+      @setting = Setting.order("created_at").last
+    end
   end
 
   # GET /expenses/new

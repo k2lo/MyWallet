@@ -16,6 +16,7 @@ gem 'coffee-rails'
 gem 'devise'
 gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views'
+gem 'currencies'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

@@ -14,7 +14,14 @@
   <tbody>
     <% @expenses.each do | expense| %>
       <tr>
-        <td><%= expense.value %></td>
+        <% if @setting.currency == ISO4217::Currency.from_code('USD').symbol  %>
+          <td><%= expense.value %></td>
+        <% elsif @setting.currency == ISO4217::Currency.from_code('EUR').symbol %>
+          <td><%= (expense.value.to)/(ISO4217::Currency.from_code('EUR').exchange_rate) %></td>
+        <% elsif @setting.currency == ISO4217::Currency.from_code('PLN').symbol %>
+          <td><%= (expense.value)/(ISO4217::Currency.from_code('PLN').exchange_rate) %></td>
+        <% end %>
+        
         <td><%= link_to expense.description, category_expense_path(@category, expense) %></td>
       </tr>
     <% end %>

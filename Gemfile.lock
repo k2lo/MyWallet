@@ -52,6 +52,7 @@ GEM
     coffee-script-source (1.12.2)
     commonjs (0.2.7)
     concurrent-ruby (1.0.5)
+    currencies (0.4.2)
     devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -185,6 +186,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails
+  currencies
   devise
   devise-bootstrap-views
   jbuilder (~> 2.0)

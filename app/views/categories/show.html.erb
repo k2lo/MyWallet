@@ -7,13 +7,27 @@
 
 <p>
   <strong>Expenses:</strong>
-  <%= @category.expenses.sum(&:value) %>
+  <% if @setting.currency == ISO4217::Currency.from_code('USD').symbol  %>
+    <%= @category.expenses.sum(&:value) %>
+  <% elsif @setting.currency == ISO4217::Currency.from_code('EUR').symbol %>
+    <% @category.expenses.sum(&:value)/(ISO4217::Currency.from_code('EUR').exchange_rate) %>
+  <% elsif @setting.currency == ISO4217::Currency.from_code('PLN').symbol %>
+    <% @category.expenses.sum(&:value)/(ISO4217::Currency.from_code('PLN').exchange_rate) %>
+  <% end %>
+  
   <% @category_expenses.each do |expense| %>
   <div class="row">
     <div class="col-xs-8 col-xs-offset-2">
       <div class="well well-lg">
         <div class="article-title">
-          <%= link_to expense.value, category_expense_path(@category, expense) %>
+          <% if @setting.currency == ISO4217::Currency.from_code('USD').symbol  %>
+            <%= link_to expense.value, category_expense_path(@category, expense) %>
+          <% elsif @setting.currency == ISO4217::Currency.from_code('EUR').symbol %>
+            <%= link_to expense.value/(ISO4217::Currency.from_code('EUR').exchange_rate), category_expense_path(@category, expense) %>
+          <% elsif @setting.currency == ISO4217::Currency.from_code('PLN').symbol %>
+            <%= link_to expense.value/(ISO4217::Currency.from_code('PLN').exchange_rate), category_expense_path(@category, expense) %>
+          <% end %>
+          
         </div>
         <div class="article-body">
           <%= truncate(expense.description, length: 100) %>
