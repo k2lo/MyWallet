@@ -4,12 +4,10 @@ Rails.application.routes.draw do
     resources :expenses
   end
   
-  #resources :expenses
+  resources :settings
   devise_for :users
   
-  #resources :categories
   get 'new_basic', to: 'categories#create_basic_categories'
-  get 'settings', to: 'categories#settings'
   
   root to: "categories#index"
   

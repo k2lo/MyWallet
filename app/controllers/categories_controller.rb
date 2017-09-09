@@ -7,14 +7,13 @@ class CategoriesController < ApplicationController
   def index
     @categories = Category.all
     @expenses = Expense.all
-    @budget = params[:budget]
     
-    
-    if @currency.nil? 
-      @currency = "$"
-      else
-      @currency = params[:currency]
+    if @setting = Setting.order("created_at").last == nil  
+      @setting = Setting.new(:budget => 0, :currency => "$")
+    else
+      @setting = Setting.order("created_at").last
     end
+     
   end
   
   # GET /categories/1
@@ -86,11 +85,6 @@ class CategoriesController < ApplicationController
     redirect_to root_path
   end
 
-  def settings
-    @user = current_user
-    @budget = params[:budget]
-    @currency = params[:currency]
-  end
   
   private
     # Use callbacks to share common setup or constraints between actions.

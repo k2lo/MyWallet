@@ -70,7 +70,12 @@
             <h3>Menu</h3>
             <ul class="nav nav-list">
               <li><%= link_to "Categories", root_path %></li>
-              <li><%= link_to "Settings", 'settings'  %></li>
+              <% if @setting = Setting.order("created_at").last == nil  %>  
+                <li><%= link_to "Settings", new_setting_path %></li>
+              <% else %>
+                <% @setting = Setting.order("created_at").last %>
+                <li><%= link_to "Settings", edit_setting_path(@setting)  %></li>
+              <% end %>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
