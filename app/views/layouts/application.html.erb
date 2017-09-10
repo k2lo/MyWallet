@@ -69,13 +69,16 @@
           <div class="well sidebar-nav">
             <h3>Menu</h3>
             <ul class="nav nav-list">
-              <li><%= link_to "Categories", root_path %></li>
-              <% if @setting = Setting.order("created_at").last == nil  %>  
-                <li><%= link_to "Settings", new_setting_path %></li>
-              <% else %>
-                <% @setting = Setting.order("created_at").last %>
-                <li><%= link_to "Settings", edit_setting_path(@setting)  %></li>
+              <% if user_signed_in? %>  
+                <li><%= link_to "Categories", root_path %></li>
+                  <% if current_user.setting.blank? == true  %>  
+                    <li><%= link_to "Settings", new_setting_path %></li>
+                  <% else %>
+                    <% @setting = Setting.find_by(user_id: current_user.id) %>
+                    <li><%= link_to "Settings", edit_setting_path(@setting)  %></li>
+                  <% end %>
               <% end %>
+             
             </ul>
           </div><!--/.well -->
         </div><!--/span-->

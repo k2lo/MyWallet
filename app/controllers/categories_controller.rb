@@ -8,10 +8,10 @@ class CategoriesController < ApplicationController
     @categories = Category.all
     @expenses = Expense.all
     
-    if @setting = Setting.order("created_at").last == nil  
+    if current_user.setting.blank? == true
       @setting = Setting.new(:budget => 0, :currency => ISO4217::Currency.from_code('USD').symbol)
     else
-      @setting = Setting.order("created_at").last
+      @setting = Setting.find_by(user_id: current_user.id)
     end
   end
   
@@ -19,10 +19,10 @@ class CategoriesController < ApplicationController
   # GET /categories/1.json
   def show
     @category_expenses = @category.expenses
-    if @setting = Setting.order("created_at").last == nil  
+     if current_user.setting.blank? == true
       @setting = Setting.new(:budget => 0, :currency => ISO4217::Currency.from_code('USD').symbol)
     else
-      @setting = Setting.order("created_at").last
+      @setting = Setting.find_by(user_id: current_user.id)
     end
   end
 
@@ -82,6 +82,7 @@ class CategoriesController < ApplicationController
     
     @basic_categories.each do |basic_categories|
     @category = Category.create(name: basic_categories, user: current_user)
+    
     
 
     end

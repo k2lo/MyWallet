@@ -13,6 +13,7 @@
 
     <% @categories.each do |category| %>
       <% if (current_user == category.user) %>
+      
         <% if @setting.currency == ISO4217::Currency.from_code('USD').symbol  %>
           <% exp_sum = category.expenses.sum(&:value) %>
         <% elsif @setting.currency == ISO4217::Currency.from_code('EUR').symbol %>
@@ -20,20 +21,28 @@
         <% elsif @setting.currency == ISO4217::Currency.from_code('PLN').symbol %>
           <% exp_sum = category.expenses.sum(&:value)/(ISO4217::Currency.from_code('PLN').exchange_rate) %>
         <% end %>
+        
         <tr>
-          <td><%= link_to category.name, category %> </td>
+          <td><%= link_to category.name, category %></td>
           <td><%= number_to_currency((exp_sum), :unit => @setting.currency, format: "%n %u") %></td>
-          <td><%= number_to_percentage((exp_sum)/(@expenses.where(user_id: current_user).sum(&:value))*100.0, precision: 0) %></td>
+          <% user_exp = @expenses.where(user_id: current_user).sum(&:value) %>
+          <% if user_exp != 0  %>
+            <td><%= number_to_percentage((category.expenses.sum(&:value))/(user_exp)*100.0, precision: 0) %></td>
+          <% else %>
+            <td><%= number_to_percentage(0, precision: 0) %></td>
+          <% end %>
+          
           <td><%= link_to 'New expense', new_category_expense_path(category) %></td>
         </tr>
+
       <% end %>
     <% end %>
     <% if @setting.currency == ISO4217::Currency.from_code('USD').symbol  %>
       <% exp_all_sum = @expenses.where(user_id: current_user).sum(&:value) %>
-      <% budget = @setting.budget.to_i %>
+      <% budget = @setting.budget %>
     <% elsif @setting.currency == ISO4217::Currency.from_code('EUR').symbol %>
       <% exp_all_sum = (@expenses.where(user_id: current_user).sum(&:value))/(ISO4217::Currency.from_code('EUR').exchange_rate) %>
-      <% budget = (@setting.budget.to_i)/(ISO4217::Currency.from_code('EUR').exchange_rate) %>
+      <% budget = (@setting.budget)/(ISO4217::Currency.from_code('EUR').exchange_rate) %>
     <% elsif @setting.currency == ISO4217::Currency.from_code('PLN').symbol %>
       <% exp_all_sum = (@expenses.where(user_id: current_user).sum(&:value))/(ISO4217::Currency.from_code('PLN').exchange_rate) %>
       <% budget = (@setting.budget.to_i)/(ISO4217::Currency.from_code('PLN').exchange_rate) %>

@@ -13,7 +13,18 @@
 
   <div class="field">
     <%= f.label :budget %>
-    <%= f.number_field :budget, value: number_to_currency(delimiter: '', unit: ''), step: :any %>
+    <% if @setting.currency == ISO4217::Currency.from_code('USD').symbol  %>
+          <% budget_currency = setting.budget %>
+        <% elsif @setting.currency == ISO4217::Currency.from_code('EUR').symbol %>
+          <% budget_currency = setting.budget/(ISO4217::Currency.from_code('EUR').exchange_rate) %>
+        <% elsif @setting.currency == ISO4217::Currency.from_code('PLN').symbol %>
+          <% budget_currency = setting.budget/(ISO4217::Currency.from_code('PLN').exchange_rate) %>
+        <% end %>
+    <%= f.number_field :budget, :value => budget_currency %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit 'Set budget' %>
   </div>
   
   <div class="field">
@@ -21,8 +32,12 @@
     <%= f.select :currency, options_for_select([ ISO4217::Currency.from_code('USD').symbol, ISO4217::Currency.from_code('PLN').symbol, ISO4217::Currency.from_code('EUR').symbol ], ISO4217::Currency.from_code('USD').symbol) %>
   </div>
   
-
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Set currency' %>
   </div>
+  
+  <div class="actions">
+    <%= f.submit 'Set both' %>
+  </div>
+
 <% end %>

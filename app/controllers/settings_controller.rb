@@ -24,16 +24,37 @@ class SettingsController < ApplicationController
   # POST /settings.json
   def create
     @setting = Setting.new(setting_params)
-    @setting.user = current_user
-    
-
-    respond_to do |format|
-      if @setting.save
-        format.html { redirect_to categories_path, notice: 'Setting was successfully created.' }
-        format.json { render :show, status: :created, location: @setting }
-      else
-        format.html { render :new }
-        format.json { render json: @setting.errors, status: :unprocessable_entity }
+    @setting.user_id = current_user.id
+    if params[:commit] == 'Set budget'
+      respond_to do |format|
+        
+        if @setting.save(params.require(:setting).permit(:budget))
+          format.html { redirect_to categories_path, notice: 'Setting was successfully updated.' }
+          format.json { render :show, status: :ok, location: @setting }
+        else
+          format.html { render :edit }
+          format.json { render json: @setting.errors, status: :unprocessable_entity }
+        end
+      end
+    elsif params[:commit] == 'Set currency'
+      respond_to do |format|
+        if @setting.save(params.require(:setting).permit(:currency))
+          format.html { redirect_to categories_path, notice: 'Setting was successfully updated.' }
+          format.json { render :show, status: :ok, location: @setting }
+        else
+          format.html { render :edit }
+          format.json { render json: @setting.errors, status: :unprocessable_entity }
+        end
+      end
+    elsif params[:commit] == 'Set both'
+      respond_to do |format|
+        if @setting.save(setting_params)
+          format.html { redirect_to categories_path, notice: 'Setting was successfully updated.' }
+          format.json { render :show, status: :ok, location: @setting }
+        else
+          format.html { render :edit }
+          format.json { render json: @setting.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -41,13 +62,36 @@ class SettingsController < ApplicationController
   # PATCH/PUT /settings/1
   # PATCH/PUT /settings/1.json
   def update
-    respond_to do |format|
-      if @setting.update(setting_params)
-        format.html { redirect_to categories_path, notice: 'Setting was successfully updated.' }
-        format.json { render :show, status: :ok, location: @setting }
-      else
-        format.html { render :edit }
-        format.json { render json: @setting.errors, status: :unprocessable_entity }
+    if params[:commit] == 'Set budget'
+      respond_to do |format|
+        
+        if @setting.update(params.require(:setting).permit(:budget))
+          format.html { redirect_to categories_path, notice: 'Setting was successfully updated.' }
+          format.json { render :show, status: :ok, location: @setting }
+        else
+          format.html { render :edit }
+          format.json { render json: @setting.errors, status: :unprocessable_entity }
+        end
+      end
+    elsif params[:commit] == 'Set currency'
+      respond_to do |format|
+        if @setting.update(params.require(:setting).permit(:currency))
+          format.html { redirect_to categories_path, notice: 'Setting was successfully updated.' }
+          format.json { render :show, status: :ok, location: @setting }
+        else
+          format.html { render :edit }
+          format.json { render json: @setting.errors, status: :unprocessable_entity }
+        end
+      end
+    elsif params[:commit] == 'Set both'
+      respond_to do |format|
+        if @setting.update(setting_params)
+          format.html { redirect_to categories_path, notice: 'Setting was successfully updated.' }
+          format.json { render :show, status: :ok, location: @setting }
+        else
+          format.html { render :edit }
+          format.json { render json: @setting.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
