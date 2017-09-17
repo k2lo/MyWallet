@@ -1,0 +1,15 @@
+<div class="col-lg-3">
+    <div class="well sidebar-nav">
+        <h3>Menu</h3>
+        <ul class="nav nav-list">
+            <% if user_signed_in? %>  
+                <li><%= link_to "Categories", root_path %></li>
+                <li><%= link_to "Settings", edit_setting_path(@setting)  %></li>
+            <% end %>
+        </ul>
+    </div>
+</div>
+<footer>
+    <p>&copy; Karol Onaszkiewicz</p>
+</footer>
+
