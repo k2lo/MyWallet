@@ -6,7 +6,7 @@ class CategoriesController < ApplicationController
   
   def index
     @categories = Category.all
-    @expenses = Expense.all
+    @setting = Setting.find_by(user_id: current_user.id)
   end
 
   def show

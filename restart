@@ -1,0 +1,4 @@
+#! /bin/bash
+command="touch tmp/restart.txt"
+`$command`
+echo Wykonano $command

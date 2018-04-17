@@ -4,15 +4,24 @@ class Expense < ApplicationRecord
     belongs_to :category
     belongs_to :user
     
-    before_save do
-        @setting = Setting.find_by(user_id: self.user.id)
-        if @setting.currency == ISO4217::Currency.from_code('USD').symbol
-            self.value = self.value
-        elsif @setting.currency == ISO4217::Currency.from_code('EUR').symbol
-            self.value = self.value*(ISO4217::Currency.from_code('EUR').exchange_rate)
-        elsif @setting.currency == ISO4217::Currency.from_code('PLN').symbol
-            self.value = self.value*(ISO4217::Currency.from_code('PLN').exchange_rate)
-        end
+    before_save :set_currency 
+
+    def set_currency
+      currency = Setting.find_by(user_id: self.user.id).currency
+      case currency
+			when ISO4217::Currency.from_code('USD').symbol
+				self.value = self.value
+			when ISO4217::Currency.from_code('EUR').symbol
+				self.value = self.value*(ISO4217::Currency.from_code('EUR').exchange_rate)
+			when ISO4217::Currency.from_code('PLN').symbol
+			  self.value = self.value*(ISO4217::Currency.from_code('PLN').exchange_rate)
+			end
     end
+
+    def self.sum_all(current_user)
+    	self.where(user_id: current_user.id).sum(&:value)
+    end
+
+
 end
 
