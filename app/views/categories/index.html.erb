@@ -18,7 +18,7 @@
 					<% else %>
 						<td><%= number_to_percentage(0, precision: 0) %></td>
 					<% end %>
-					<td><%= link_to 'New expense', new_category_expense_path(category) %></td>
+					<td><button type="button" class="btn btn-primary btn-sm"><%= link_to 'New expense', new_category_expense_path(category), {:style=>'color:#FFFFFF;', :class => "css_class"} %></button></td>
 				</tr>
 			<% end %>
 			<td>All expenses: </td>
@@ -31,9 +31,19 @@
 			<% end %>
 		</tbody>
 	</table>
-	<p><%= link_to 'New Category', new_category_path %></p>
-	<p><%= link_to 'Create Basic Categories', 'new_basic' %></p>
 </div>
+
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+	Create new category
+</button>
+<% if @categories.basic_categories? %>
+	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+		<%= link_to 'Create Basic Categories', 'new_basic', {:style=>'color:#FFFFFF;', :class => "css_class"} %>
+	</button>
+<% end %>
+<%= render 'categories/form', category: @category %>
+
 
 
 

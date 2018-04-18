@@ -18,6 +18,10 @@ class Category < ApplicationRecord
     end
 
     def percentage(current_user)
-    	self.expenses.sum(&:value) / expense_sum(current_user) * 100.0
+    	self.expenses.sum(&:value) / Expense.all.sum_all(current_user) * 100.0
+    end
+
+    def self.basic_categories?
+      Category.where(:name => ["Bills", "Clothes", "Food", "House"]).size != 4
     end
 end

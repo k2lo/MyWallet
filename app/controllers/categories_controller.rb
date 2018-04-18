@@ -5,6 +5,7 @@ class CategoriesController < ApplicationController
   
   
   def index
+    @category = Category.new
     @categories = Category.all
     @setting = Setting.find_by(user_id: current_user.id)
   end
