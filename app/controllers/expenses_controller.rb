@@ -8,9 +8,6 @@ class ExpensesController < ApplicationController
     @expense = @category.expenses.new
   end
 
-  def edit
-  end
-
   def create
     @expense = @category.expenses.new(expense_params)
     @expense.user = current_user
@@ -19,9 +16,8 @@ class ExpensesController < ApplicationController
       flash[:success] = "Expense was successfully created"
       redirect_to categories_path
     else
-      render :new
+      render 'categories/index', :locals => {:@expense_error => @expense, :@categories => Category.all, :category => Category.new, :@expense => Category.new.expenses.new }
     end
-    
   end
 
   def update
@@ -29,8 +25,7 @@ class ExpensesController < ApplicationController
       flash[:success] = "Expense was successfully updated"
       redirect_to category_path(@category)
     else
-      flash[:danger] = "Article has not been updated"
-      redirect_to category_path(@category)
+      render "categories/show", :locals => {:category => @category, :@expense_error => @expense}
     end
   end
 
