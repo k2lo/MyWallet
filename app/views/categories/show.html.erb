@@ -1,20 +1,7 @@
-<% if @category_error.present? || @expense_error.present? %>
-	<% error = @category_error || @expense_error %>
-	<div id="error_explanation">
-		<h2><%= pluralize(error.errors.count, "error") %> prohibited this category from being saved:</h2>
-
-		<ul>
-			<% error.errors.full_messages.each do |message| %>
-				<li><%= message %></li>
-			<% end %>
-		</ul>
-	</div>
-<% end %>
-
 <div class="row">
 	<div class="col-md-6">
 		<h5>
-			<strong>Category expenses:</strong>
+			<strong><%= @category.name %> expenses:</strong>
 			<%= number_to_currency(@category.expense_sum(current_user), :unit => @setting.currency, format: "%n %u") %>
 		</h5>
 	</div>
@@ -25,13 +12,13 @@
 			Edit Category
 		</button>
 		<%= link_to 'Delete category', @category, method: :delete, data: { confirm: 'Are you sure?' },  class: "btn btn-danger btn-sm" %>
-		<button type="button" class="btn btn-light btn-sm"><%= link_to 'Back', categories_path, :method => :get %></button>
+		<button type="button" class="btn btn-light btn-sm"><%= link_to 'Back', categories_path %></button>
 	</div>
 </div>
 <%= render 'categories/form', category: @category %>
 <div class="row">
 	<div class="col-md-6">
-		<% @category.expenses.each do |expense| %>
+		<% @category_expenses.each do |expense| %>
 			<ul class="list-group">
 				<li class="list-group-item">
 					<div class="expense-title">
