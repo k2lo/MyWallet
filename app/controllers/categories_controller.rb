@@ -8,18 +8,10 @@ class CategoriesController < ApplicationController
     @category = Category.new
     @categories = Category.all
     @setting = Setting.find_by(user_id: current_user.id)
-    @expense = @category.expenses.new
+    @expense = Category.new.expenses.new
   end
 
   def show
-    @category_expenses = @category.expenses
-  end
-
-  def new
-    @category = Category.new
-  end
-
-  def edit
   end
 
   def create
@@ -30,7 +22,7 @@ class CategoriesController < ApplicationController
       flash[:success] = "Category was successfully created"
       redirect_to categories_path
     else
-      render :new
+      render :index, :locals => {:@category_error => @category, :@categories => Category.all, :category => Category.new, :@expense => Category.new.expenses.new }
     end
     
   end
@@ -40,7 +32,7 @@ class CategoriesController < ApplicationController
       flash[:success] = "Category was successfully updated"
       redirect_to category_path(@category)
     else
-      render :edit
+      render :show, :locals => {:@category_error => @category, :expense => @expense}
     end
   end
 
