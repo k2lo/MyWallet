@@ -2,7 +2,7 @@
  	<table class="table">
 	    <thead>
 			<tr>
-				<th>Expenses</th>
+				<th>Categories</th>
 				<th>Value</th>
 				<th>Percentage</th>
 				<th colspan="1"></th>
@@ -18,8 +18,14 @@
 					<% else %>
 						<td><%= number_to_percentage(0, precision: 0) %></td>
 					<% end %>
-					<td><button type="button" class="btn btn-primary btn-sm"><%= link_to 'New expense', new_category_expense_path(category), {:style=>'color:#FFFFFF;', :class => "css_class"} %></button></td>
+					<td>
+						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#<%=@expense.id%>Modal">
+							Add expense
+						</button>
+					</td>
+
 				</tr>
+				<%= render 'expenses/form', category: category, expense: @expense %>
 			<% end %>
 			<td>All expenses: </td>
 			<td><%= number_to_currency(Expense.all.sum_all(current_user), :unit => @setting.currency, format: "%n %u") %></td>
@@ -34,12 +40,12 @@
 </div>
 
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryModal">
 	Create new category
 </button>
 <% if @categories.basic_categories? %>
-	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-		<%= link_to 'Create Basic Categories', 'new_basic', {:style=>'color:#FFFFFF;', :class => "css_class"} %>
+	<button type="button" class="btn btn-success">
+		<%= link_to 'Create basic categories', 'new_basic', {:style=>'color:#FFFFFF;', :class => "css_class"} %>
 	</button>
 <% end %>
 <%= render 'categories/form', category: @category %>

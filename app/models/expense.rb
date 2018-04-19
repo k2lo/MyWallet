@@ -9,13 +9,25 @@ class Expense < ApplicationRecord
     def set_currency
       currency = Setting.find_by(user_id: self.user.id).currency
       case currency
-			when ISO4217::Currency.from_code('USD').symbol
-				self.value = self.value
-			when ISO4217::Currency.from_code('EUR').symbol
-				self.value = self.value*(ISO4217::Currency.from_code('EUR').exchange_rate)
-			when ISO4217::Currency.from_code('PLN').symbol
-			  self.value = self.value*(ISO4217::Currency.from_code('PLN').exchange_rate)
-			end
+    	when ISO4217::Currency.from_code('USD').symbol
+    		self.value
+    	when ISO4217::Currency.from_code('EUR').symbol
+    		self.value = self.value * (ISO4217::Currency.from_code('EUR').exchange_rate)
+    	when ISO4217::Currency.from_code('PLN').symbol
+    	  self.value = self.value * (ISO4217::Currency.from_code('PLN').exchange_rate)
+    	end
+    end
+
+    def expense_val
+      currency = Setting.find_by(user_id: self.user.id).currency
+      case currency
+      when ISO4217::Currency.from_code('USD').symbol
+        self.value
+      when ISO4217::Currency.from_code('EUR').symbol
+        self.value / (ISO4217::Currency.from_code('EUR').exchange_rate)
+      when ISO4217::Currency.from_code('PLN').symbol
+        self.value / (ISO4217::Currency.from_code('PLN').exchange_rate)
+      end
     end
 
     def self.sum_all(current_user)

@@ -1,53 +1,41 @@
 <div class="row">
-  <h5>
-    <strong><%= @category.name %> expenses:</strong>
-    
-    <% if @setting.currency == ISO4217::Currency.from_code('USD').symbol  %>
-      <% exp_sum = @category.expenses.sum(&:value) %>
-    <% elsif @setting.currency == ISO4217::Currency.from_code('EUR').symbol %>
-      <% exp_sum = @category.expenses.sum(&:value)/(ISO4217::Currency.from_code('EUR').exchange_rate) %>
-      
-    <% elsif @setting.currency == ISO4217::Currency.from_code('PLN').symbol %>
-      <% exp_sum = @category.expenses.sum(&:value)/(ISO4217::Currency.from_code('PLN').exchange_rate) %>
-      
-    <% end %>
-    
-    <%= number_to_currency((exp_sum), :unit => @setting.currency, format: "%n %u") %>
-  </h5>
+	<div class="col-md-6">
+		<h5>
+			<strong><%= @category.name %> expenses:</strong>
+			<%= number_to_currency(@category.expense_sum(current_user), :unit => @setting.currency, format: "%n %u") %>
+		</h5>
+	</div>
 </div>
 <div class="row">
-  <%= link_to 'New Expense', new_category_expense_path(@category) %> |
-  <%= link_to 'Edit', edit_category_path(@category) %> |
-  <%= link_to 'Delete category', @category, method: :delete, data: { confirm: 'Are you sure?' } %> |
-  <%= link_to 'Back', categories_path %>
+	<div class="col-md-6">
+		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#categoryModal">
+			Edit Category
+		</button>
+		<%= link_to 'Delete category', @category, method: :delete, data: { confirm: 'Are you sure?' },  class: "btn btn-danger btn-sm" %>
+		<button type="button" class="btn btn-light btn-sm"><%= link_to 'Back', categories_path %></button>
+	</div>
 </div>
-  <% @category_expenses.each do |expense| %>
-  <div class="row">
-    <div class="col-xs-8 col-xs-offset-2">
-      <div class="well well-sm">
-        <div class="article-title">
-          <% if @setting.currency == ISO4217::Currency.from_code('USD').symbol  %>
-            <% exp_val = expense.value %>
-          <% elsif @setting.currency == ISO4217::Currency.from_code('EUR').symbol %>
-         
-            <% exp_val = expense.value/(ISO4217::Currency.from_code('EUR').exchange_rate) %>
-          <% elsif @setting.currency == ISO4217::Currency.from_code('PLN').symbol %>
-       
-            <% exp_val = expense.value/(ISO4217::Currency.from_code('PLN').exchange_rate) %>
-          <% end %>
-          <%= number_to_currency((exp_val), :unit => @setting.currency, format: "%n %u") %>
-          
-        </div>
-        <div class="article-body">
-          <%= truncate(expense.description, length: 100) %>
-        </div>
-         <div class="article-actions">
-          <%= link_to 'Edit this expense', edit_category_expense_path(@category, expense), class: "btn btn-xs btn-primary" %>
-          <%= link_to "Delete this expense", category_expense_path(@category, expense), method: :delete,
-                                        data: { confirm: "Are you sure you want to delete the expense?"},
-                                        class: "btn btn-xs btn-danger" %>
-          </div>
-        </div>
-      </div>
-    </div>
-  <% end %>
+<%= render 'categories/form', category: @category %>
+<div class="row">
+	<div class="col-md-6">
+		<% @category_expenses.each do |expense| %>
+			<ul class="list-group">
+				<li class="list-group-item">
+					<div class="expense-title">
+						<%= truncate(expense.description, length: 100) %>
+					</div>
+					<div class="expense-value">
+							<%= number_to_currency((expense.expense_val), :unit => @setting.currency, format: "%n %u") %>
+					</div>
+					<div class="article-actions">
+						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#<%=expense.id%>Modal">
+							Edit expense
+						</button>
+						<%= link_to "Delete this expense", category_expense_path(@category, expense), method: :delete, data: { confirm: "Are you sure you want to delete the expense?"}, class: "btn btn-danger btn-sm" %>
+					</div>
+				</li>
+			</ul>
+			<%= render 'expenses/form', category: @category, expense: expense %>
+		<% end %>
+	</div>
+</div>

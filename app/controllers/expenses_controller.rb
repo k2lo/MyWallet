@@ -25,11 +25,12 @@ class ExpensesController < ApplicationController
   end
 
   def update
-    if @expense.save
+    if @expense.update_attributes(expense_params)
       flash[:success] = "Expense was successfully updated"
       redirect_to category_path(@category)
     else
-      render :edit
+      flash[:danger] = "Article has not been updated"
+      redirect_to category_path(@category)
     end
   end
 

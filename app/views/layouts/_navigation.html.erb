@@ -3,13 +3,19 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
             <% if user_signed_in? %>
-                <li class="nav-item"><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
-            <% else %>  
-                <li class="nav-item"><%= link_to "Sign up", new_user_registration_path %></li>
-                <li class="nav-item"><%= link_to "Sign in", new_user_session_path %></li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="<%= url_for(destroy_user_session_path) %>" data-method="delete">Sign out</a>
+                </li>
+            <% else %>
+                <li class="nav-item active">
+                    <a class="nav-link" href="sign_up">Sign up</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="sign_in">Sign in</a>
+                </li>
             <% end %>
         </ul>
     </div>

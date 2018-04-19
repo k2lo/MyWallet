@@ -1,31 +1,43 @@
-<%= form_for([expense.category, expense]) do |f| %>
-  <% if expense.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(expense.errors.count, "error") %> prohibited this expense from being saved:</h2>
-      <ul>
-        <% expense.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_for([category, expense]) do |f| %>
+	<% if expense.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(expense.errors.count, "error") %> prohibited this expense from being saved:</h2>
+			<ul>
+				<% expense.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
 
-  <div class="field">
-    <%= f.label :value %>
-    <%= f.number_field :value, value: number_to_currency(f.object.value.to_f, delimiter: '', unit: ''), step: :any %>
-  </div>
-
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_area :description %>
-  </div>
-  
-  <div class="field">
-    
-  
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+	<div class="modal fade" id="<%=expense.id%>Modal" tabindex="-1" role="dialog" aria-labelledby="<%=expense.id%>ModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="<%=expense.id%>ModalLabel">Create Expense</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-8">
+							<%= f.label :description %>
+							<%= f.text_field :description, :class => 'form-control' %>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-8">
+							<%= f.label :value %>
+							<%= f.number_field :value, value: number_to_currency(f.object.value.to_f, delimiter: '', unit: ''), step: :any, :class => 'form-control' %>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					<%= f.submit :class => 'btn btn-primary' %>
+				</div>
+			</div>
+		</div>
+	</div>
 <% end %>

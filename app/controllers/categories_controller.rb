@@ -8,6 +8,7 @@ class CategoriesController < ApplicationController
     @category = Category.new
     @categories = Category.all
     @setting = Setting.find_by(user_id: current_user.id)
+    @expense = @category.expenses.new
   end
 
   def show
@@ -35,7 +36,7 @@ class CategoriesController < ApplicationController
   end
 
   def update
-    if @category.save
+    if @category.update_attributes(category_params)
       flash[:success] = "Category was successfully updated"
       redirect_to category_path(@category)
     else
