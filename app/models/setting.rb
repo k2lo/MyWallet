@@ -6,12 +6,13 @@ class Setting < ApplicationRecord
 
     def set_budget
       case self.currency
-        when ISO4217::Currency.from_code('USD').symbol || nil
+        when 'EUR' || nil
             self.budget
-        when ISO4217::Currency.from_code('EUR').symbol
-            self.budget = self.budget * (ISO4217::Currency.from_code('EUR').exchange_rate)
-        when ISO4217::Currency.from_code('PLN').symbol
-        	self.budget = self.budget * (ISO4217::Currency.from_code('PLN').exchange_rate)
+        when 'USD'
+            self.budget = self.budget * Money.default_bank.get_rate('EUR', 'USD')
+        when 'PLN'
+        	self.budget = self.budget * Money.default_bank.get_rate('EUR', 'PLN')
         end
+        self.budget.to_f.round(2)
     end
 end

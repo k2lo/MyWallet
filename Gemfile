@@ -18,7 +18,8 @@ gem 'devise'
 gem 'twitter-bootstrap-rails'
 gem 'bootstrap', '~> 4.1.0'
 gem 'devise-bootstrap-views'
-gem 'currencies'
+gem 'money'
+gem 'eu_central_bank', git: 'https://github.com/RubyMoney/eu_central_bank.git'
 gem 'popper_js', '~> 1.12.9'
 
 # Use jquery as the JavaScript library

@@ -13,7 +13,7 @@
 	<div class="row">
 		<div class="col-sm-8">
 			<%= f.label :budget %>
-			<%= f.number_field :budget, :value => setting.set_budget, :class => 'form-control' %>
+			<%= f.number_field :budget, :value => setting.set_budget, :step => ".01", :class => 'form-control' %>
 		</div>
 	</div>
 
@@ -24,7 +24,7 @@
 	<div class="row">
 		<div class="col-sm-8">
 			<%= f.label :currency %>
-			<%= f.select :currency, options_for_select([ ISO4217::Currency.from_code('USD').symbol, ISO4217::Currency.from_code('PLN').symbol, ISO4217::Currency.from_code('EUR').symbol ], ISO4217::Currency.from_code('USD').symbol), :class => 'form-control' %>
+			<%= f.select :currency, options_for_select(['EUR', 'USD', 'PLN'], 'EUR'), :class => 'form-control' %>
 		</div>
 	</div>
 	<div class="actions">

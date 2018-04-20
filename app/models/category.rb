@@ -8,13 +8,14 @@ class Category < ApplicationRecord
     def expense_sum(current_user)
     	currency = Setting.find_by(user_id: current_user.id).currency
     	case currency
-		when ISO4217::Currency.from_code('USD').symbol || nil
-			self.expenses.sum(&:value)
-		when ISO4217::Currency.from_code('EUR').symbol
-			self.expenses.sum(&:value) / (ISO4217::Currency.from_code('EUR').exchange_rate)
-		when ISO4217::Currency.from_code('PLN').symbol
-		  self.expenses.sum(&:value) / (ISO4217::Currency.from_code('PLN').exchange_rate)
+		when 'EUR' || nil
+		  sum = self.expenses.sum(&:value)
+		when 'USD'
+		  sum = self.expenses.sum(&:value) / Money.default_bank.get_rate('EUR', 'USD')
+		when 'PLN'
+		  sum = self.expenses.sum(&:value) / Money.default_bank.get_rate('EUR', 'PLN')
 		end
+        sum.to_f.round(2)
     end
 
     def percentage(current_user)
