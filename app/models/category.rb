@@ -5,21 +5,12 @@ class Category < ApplicationRecord
     has_many :expenses, dependent: :destroy
     belongs_to :user
 
-    def expense_sum(current_user)
-    	currency = Setting.find_by(user_id: current_user.id).currency
-    	case currency
-		when 'EUR' || nil
-		  sum = self.expenses.sum(&:value)
-		when 'USD'
-		  sum = self.expenses.sum(&:value) / Money.default_bank.get_rate('EUR', 'USD')
-		when 'PLN'
-		  sum = self.expenses.sum(&:value) / Money.default_bank.get_rate('EUR', 'PLN')
-		end
-        sum.to_f.round(2)
+    def expense_sum
+		self.expenses.sum(&:value)
     end
 
     def percentage(current_user)
-    	self.expenses.sum(&:value) / Expense.all.sum_all(current_user) * 100.0
+    	expense_sum / Expense.all.sum_all(current_user) * 100.0
     end
 
     def self.basic_categories?
