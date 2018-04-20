@@ -7,14 +7,12 @@
     <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
   </head>
   <body>
-    <%= render 'layouts/navigation' %>
     <div role="main" class="container">
-      <div class="row">
-        <div class="col-lg-9">
+      <%= render 'layouts/navigation' %>
+        <div class="main col-lg-7">
           <%= render 'layouts/messages' %>
           <%= yield %>
         </div>
-      </div>
     </div>
   </body>
 </html>

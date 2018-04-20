@@ -1,5 +1,11 @@
 @import "bootstrap";
 
+a,
+a:focus,
+a:hover {
+  color: #000;
+}
+
 .expense-title {
   font-weight: bold;
   font-size: 1.5em;
@@ -12,9 +18,10 @@
   margin-bottom: 0.8em;
 }
 
-.expense-actions {
-	padding-left: 6em;
-  padding-bottom: 10px;
+.main {
+	position: absolute;
+	padding-top: 10px;
+	left: 350px;
 }
 
 .actions {

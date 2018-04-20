@@ -43,7 +43,7 @@
 					<div class="expense-value">
 							<%= number_to_currency((expense.expense_val), :unit => @setting.currency, format: "%n %u") %>
 					</div>
-					<div class="expense-actions">
+					<div class="actions">
 						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#<%=expense.id%>Modal">
 							Edit expense
 						</button>
