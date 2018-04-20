@@ -1,5 +1,5 @@
-<h1>Settings </h1>
+<h3>Settings </h3>
 
 <%= render 'form', setting: @setting %>
 
-<%= link_to 'Back', categories_path %>
+<button type="button" class="btn btn-light btn-sm"><%= link_to 'Back', categories_path, :method => :get %></button>

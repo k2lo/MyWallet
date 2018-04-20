@@ -1,43 +1,38 @@
 <%= form_for(setting) do |f| %>
-  <% if setting.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(setting.errors.count, "error") %> prohibited this setting from being saved:</h2>
+	<% if setting.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(setting.errors.count, "error") %> prohibited this setting from being saved:</h2>
+			<ul>
+				<% setting.errors.full_messages.each do |message| %>
+					<li><%= message %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
 
-      <ul>
-      <% setting.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+	<div class="row">
+		<div class="col-sm-8">
+			<%= f.label :budget %>
+			<%= f.number_field :budget, :value => setting.set_budget, :class => 'form-control' %>
+		</div>
+	</div>
 
-  <div class="field">
-    <%= f.label :budget %>
-    <% if @setting.currency == ISO4217::Currency.from_code('USD').symbol %>
-          <% budget_currency = setting.budget %>
-        <% elsif @setting.currency == ISO4217::Currency.from_code('EUR').symbol %>
-          <% budget_currency = setting.budget/(ISO4217::Currency.from_code('EUR').exchange_rate) %>
-        <% elsif @setting.currency == ISO4217::Currency.from_code('PLN').symbol %>
-          <% budget_currency = setting.budget/(ISO4217::Currency.from_code('PLN').exchange_rate) %>
-        <% end %>
-    <%= f.number_field :budget, :value => budget_currency %>
-  </div>
-  
-  <div class="actions">
-    <%= f.submit 'Set budget' %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :currency %>
-    <%= f.select :currency, options_for_select([ ISO4217::Currency.from_code('USD').symbol, ISO4217::Currency.from_code('PLN').symbol, ISO4217::Currency.from_code('EUR').symbol ], ISO4217::Currency.from_code('USD').symbol) %>
-  </div>
-  
-  <div class="actions">
-    <%= f.submit 'Set currency' %>
-  </div>
-  
-  <div class="actions">
-    <%= f.submit 'Set both' %>
-  </div>
+	<div class="actions">
+		<%= f.submit 'Set budget', :class => 'btn btn-primary' %>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-8">
+			<%= f.label :currency %>
+			<%= f.select :currency, options_for_select([ ISO4217::Currency.from_code('USD').symbol, ISO4217::Currency.from_code('PLN').symbol, ISO4217::Currency.from_code('EUR').symbol ], ISO4217::Currency.from_code('USD').symbol), :class => 'form-control' %>
+		</div>
+	</div>
+	<div class="actions">
+		<%= f.submit 'Set currency', :class => 'btn btn-primary' %>
+	</div>
+
+	<div class="actions">
+		<%= f.submit 'Set both', :class => 'btn btn-primary' %>
+	</div>
 
 <% end %>

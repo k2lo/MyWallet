@@ -13,22 +13,25 @@
 
 <div class="row">
 	<div class="col-md-6">
-		<h5>
+		<h3>
 			<strong>Category expenses:</strong>
 			<%= number_to_currency(@category.expense_sum(current_user), :unit => @setting.currency, format: "%n %u") %>
-		</h5>
+		</h3>
 	</div>
-</div>
-<div class="row">
 	<div class="col-md-6">
-		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#categoryModal">
-			Edit Category
-		</button>
-		<%= link_to 'Delete category', @category, method: :delete, data: { confirm: 'Are you sure?' },  class: "btn btn-danger btn-sm" %>
-		<button type="button" class="btn btn-light btn-sm"><%= link_to 'Back', categories_path, :method => :get %></button>
+		<div class="actions ">
+			<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#categoryModal">
+				Edit Category
+			</button>
+			<%= link_to 'Delete category', @category, method: :delete, data: { confirm: 'Are you sure?' },  class: "btn btn-danger btn-sm" %>
+			<button type="button" class="btn btn-light btn-sm"><%= link_to 'Back', categories_path, :method => :get %></button>
+		</div>
 	</div>
 </div>
 <%= render 'categories/form', category: @category %>
+<div class="row">
+	<div class="col-md-6"><h4>Expenses list</h4></div>
+</div>
 <div class="row">
 	<div class="col-md-6">
 		<% @category.expenses.each do |expense| %>
@@ -40,7 +43,7 @@
 					<div class="expense-value">
 							<%= number_to_currency((expense.expense_val), :unit => @setting.currency, format: "%n %u") %>
 					</div>
-					<div class="article-actions">
+					<div class="expense-actions">
 						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#<%=expense.id%>Modal">
 							Edit expense
 						</button>
