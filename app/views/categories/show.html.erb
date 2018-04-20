@@ -15,7 +15,7 @@
 	<div class="col-md-6">
 		<h3>
 			<strong>Category expenses:</strong>
-			<%= number_to_currency(@category.expense_sum * Expense::RATES, :unit => @setting.currency, format: "%n %u") %>
+			<%= number_to_currency(@category.expense_sum, :unit => @setting.currency, format: "%n %u") %>
 		</h3>
 	</div>
 	<div class="col-md-6">
@@ -41,7 +41,7 @@
 						<%= truncate(expense.description, length: 100) %>
 					</div>
 					<div class="expense-value">
-							<%= number_to_currency(expense.value * Expense::RATES, :unit => @setting.currency, format: "%n %u") %>
+							<%= number_to_currency(expense.value, :unit => @setting.currency, format: "%n %u") %>
 					</div>
 					<div class="actions">
 						<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#<%=expense.id%>Modal">
