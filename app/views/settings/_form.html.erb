@@ -17,22 +17,15 @@
 		</div>
 	</div>
 
-	<div class="actions">
-		<%= f.submit 'Set budget', :class => 'btn btn-primary' %>
-	</div>
-
 	<div class="row">
 		<div class="col-sm-8">
 			<%= f.label :currency %>
 			<%= f.select :currency, options_for_select([ ISO4217::Currency.from_code('USD').symbol, ISO4217::Currency.from_code('PLN').symbol, ISO4217::Currency.from_code('EUR').symbol ], ISO4217::Currency.from_code('USD').symbol), :class => 'form-control' %>
 		</div>
 	</div>
-	<div class="actions">
-		<%= f.submit 'Set currency', :class => 'btn btn-primary' %>
-	</div>
 
 	<div class="actions">
-		<%= f.submit 'Set both', :class => 'btn btn-primary' %>
+		<%= f.submit :class => 'btn btn-primary' %>
 	</div>
 
 <% end %>

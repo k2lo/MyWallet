@@ -8,8 +8,7 @@ Rails.application.routes.draw do
   devise_for :users
   
   get 'new_basic', to: 'categories#create_basic_categories'
-  get 'info', to: 'pages#info'
   
-  root to: "categories#index"
+  root to: "pages#info"
   
 end
