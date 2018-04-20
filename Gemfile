@@ -19,6 +19,7 @@ gem 'twitter-bootstrap-rails'
 gem 'bootstrap', '~> 4.1.0'
 gem 'devise-bootstrap-views'
 gem 'currencies'
+gem 'popper_js', '~> 1.12.9'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
