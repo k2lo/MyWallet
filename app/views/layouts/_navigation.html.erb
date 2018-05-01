@@ -3,27 +3,27 @@
     <ul class="navbar-nav mr-auto">
         <% if user_signed_in? %>
             <li class="nav-item active">
-                <a class="nav-link" href="<%= url_for(categories_path) %>">Home</a>
+                <a class="nav-link" href="<%= url_for(categories_path) %>" data-method="get">Home</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="<%= url_for(edit_setting_path(@setting)) %>">Settings</a>
+                <a class="nav-link" href="<%= url_for(edit_setting_path(@setting)) %>" data-method="get">Settings</a>
             </li>
         <% end %>
     </ul>
     <ul class="navbar-nav ml-auto">
         <% if user_signed_in? %>
             <li class="nav-item active">
-                <a class="nav-link" href="<%= url_for(root_path) %>">About</a>
+                <a class="nav-link" href="<%= url_for(root_path) %>" data-method="get">About</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="<%= url_for(destroy_user_session_path) %>" data-method="delete">Sign out</a>
             </li>
         <% else %>
             <li class="nav-item active">
-                <a class="nav-link" href="<%= url_for(new_user_registration_path) %>" >Sign up</a>
+                <a class="nav-link" href="<%= url_for(new_user_registration_path) %>">Sign up</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="<%= url_for(new_user_session_path) %>" >Sign in</a>
+                <a class="nav-link" href="<%= url_for(new_user_session_path) %>">Sign in</a>
             </li>
         <% end %>
     </ul>

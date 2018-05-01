@@ -22,7 +22,7 @@
 			</tr>
 	    </thead>
 		<tbody>
-			<% @categories.each do |category| %>
+			<% current_user.categories.each do |category| %>
 				<tr>
 					<td><%= link_to category.name, category %></td>
 					<td><%= number_to_currency(category.expense_sum, :unit => @setting.currency, format: "%n %u") %></td>
@@ -56,7 +56,7 @@
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryModal">
 	Create new category
 </button>
-<% if @categories.basic_categories? %>
+<% if current_user.categories.basic_categories? %>
 	<button type="button" class="btn btn-success">
 		<%= link_to 'Create basic categories', 'new_basic', {:style=>'color:#FFFFFF;', :class => "css_class"} %>
 	</button>
